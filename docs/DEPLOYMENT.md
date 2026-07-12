@@ -36,8 +36,8 @@ Supabase account, and a Vercel account — both are free to sign up.
    -- Turn on Row Level Security.
    alter table public.waitlist enable row level security;
 
-   -- Allow anyone (anon key) to add themselves, but nothing else.
-   -- With no select/update/delete policy, the public key cannot read the list.
+   -- Allow anyone (publishable key → anon role) to add themselves, but nothing
+   -- else. With no select/update/delete policy, the public cannot read the list.
    create policy "Public can join the waitlist"
      on public.waitlist
      for insert
@@ -47,19 +47,24 @@ Supabase account, and a Vercel account — both are free to sign up.
 
 3. You should see "Success. No rows returned." That's expected.
 
-> **Why this is safe:** the app ships a public "anon" key in the browser. Row
-> Level Security means that key can *only* insert rows — it cannot read, edit, or
-> delete anyone's email. You read the list from the Supabase dashboard, which
-> uses a separate privileged key that never leaves Supabase.
+> **Why this is safe:** the app ships the **publishable** key in the browser.
+> This key maps to the `anon` role, and Row Level Security means it can *only*
+> insert rows — it cannot read, edit, or delete anyone's email. You read the list
+> from the Supabase dashboard, which uses the privileged **secret** key that
+> never leaves Supabase.
 
 ### 1.3 Copy your API keys
 
-1. In the sidebar, go to **Project Settings** (gear icon) → **API**.
+1. In the sidebar, go to **Project Settings** (gear icon) → **API Keys**.
 2. Copy these two values — you'll paste them into Vercel in Part 2:
-   - **Project URL** → this is `VITE_SUPABASE_URL`
-     (looks like `https://abcdefgh.supabase.co`)
-   - **Project API keys → `anon` `public`** → this is `VITE_SUPABASE_ANON_KEY`
-     (a long string starting with `eyJ...`)
+   - **Project URL** (under **Settings → API**, or **Data API**) → this is
+     `VITE_SUPABASE_URL` (looks like `https://abcdefgh.supabase.co`)
+   - **Publishable key** → this is `VITE_SUPABASE_PUBLISHABLE_KEY`
+     (starts with `sb_publishable_...`)
+
+> **Do not** copy a **secret key** (`sb_secret_...`) — those are for server-side
+> code only and must never go in the frontend or Vercel's build-time env for this
+> app. This client only needs the publishable key.
 
 Keep this tab open, or paste both into a scratch note for the next part.
 
@@ -84,10 +89,10 @@ need to change them — `vercel.json` pins them too.
 Before clicking Deploy, expand **Environment Variables** and add both keys from
 Part 1.3:
 
-| Name                     | Value                                   |
-| ------------------------ | --------------------------------------- |
-| `VITE_SUPABASE_URL`      | your Supabase Project URL               |
-| `VITE_SUPABASE_ANON_KEY` | your Supabase `anon` `public` key       |
+| Name                            | Value                                       |
+| ------------------------------- | ------------------------------------------- |
+| `VITE_SUPABASE_URL`             | your Supabase Project URL                   |
+| `VITE_SUPABASE_PUBLISHABLE_KEY` | your Supabase publishable key (`sb_publishable_...`) |
 
 Leave the environment set to **all** (Production, Preview, Development) so
 preview deploys work too.

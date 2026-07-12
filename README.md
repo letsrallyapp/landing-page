@@ -12,8 +12,10 @@ deployed to Vercel.
 ## Waitlist (Supabase)
 
 The waitlist form (`src/components/WaitlistSection.tsx`) writes emails directly
-to a Supabase table from the browser. The anon/public key is safe to ship in the
-client — access is restricted by Row Level Security (RLS).
+to a Supabase table from the browser. The **publishable** key
+(`sb_publishable_...`) is safe to ship in the client — access is restricted by
+Row Level Security (RLS). Never expose the **secret** key (`sb_secret_...`); it
+bypasses RLS and is for server-side use only.
 
 ### 1. Create the table
 
@@ -29,7 +31,7 @@ create table if not exists public.waitlist (
 -- Turn on Row Level Security.
 alter table public.waitlist enable row level security;
 
--- Allow anyone (anon key) to add themselves to the waitlist, but nothing else.
+-- Allow anyone (publishable key → anon role) to add themselves, but nothing else.
 -- No select/update/delete policy means the public cannot read the email list.
 create policy "Public can join the waitlist"
   on public.waitlist
@@ -43,12 +45,12 @@ users who re-submit still see the confirmation.
 
 ### 2. Set the environment variables
 
-Find these under **Settings → API** in your Supabase project:
+Find these under **Project Settings → API Keys** in your Supabase project:
 
-| Variable                 | Value                          |
-| ------------------------ | ------------------------------ |
-| `VITE_SUPABASE_URL`      | Project URL                    |
-| `VITE_SUPABASE_ANON_KEY` | `anon` `public` API key        |
+| Variable                        | Value                                    |
+| ------------------------------- | ---------------------------------------- |
+| `VITE_SUPABASE_URL`             | Project URL                              |
+| `VITE_SUPABASE_PUBLISHABLE_KEY` | Publishable key (`sb_publishable_...`)   |
 
 - **Local:** put them in `.env.local`.
 - **Production:** add both as environment variables in the Vercel project (see
@@ -64,7 +66,7 @@ The full click-by-click walkthrough is in **[`docs/DEPLOYMENT.md`](docs/DEPLOYME
 The short version:
 
 1. Import the repo at [vercel.com/new](https://vercel.com/new).
-2. Add `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` as environment variables
-   (they're inlined into the bundle at build time).
+2. Add `VITE_SUPABASE_URL` and `VITE_SUPABASE_PUBLISHABLE_KEY` as environment
+   variables (they're inlined into the bundle at build time).
 3. Deploy. Every push to `main` redeploys automatically; pull requests get
    preview URLs.

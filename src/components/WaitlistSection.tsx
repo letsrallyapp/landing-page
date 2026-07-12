@@ -1,18 +1,43 @@
-import React, { useState } from 'react';
+import React, { FormEvent, useState } from 'react';
 import { ArrowRightIcon, CheckIcon } from 'lucide-react';
 import { AnimatePresence, motion } from 'framer-motion';
+import { supabase } from '../lib/supabase';
 export function WaitlistSection() {
   const [email, setEmail] = useState('');
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState('');
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
+    const trimmedEmail = email.trim();
+    const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedEmail);
     if (!validEmail) {
       setError('Enter a valid email address.');
       return;
     }
     setError('');
+
+    if (!supabase) {
+      setError('Waitlist is not configured yet. Please try again later.');
+      return;
+    }
+
+    setSubmitting(true);
+    const { error: insertError } = await supabase
+      .from('waitlist')
+      .insert({ email: trimmedEmail.toLowerCase() });
+    setSubmitting(false);
+
+    if (insertError) {
+      // Postgres unique_violation — email is already on the list.
+      if (insertError.code === '23505') {
+        setSubmitted(true);
+        return;
+      }
+      setError('Something went wrong. Please try again.');
+      return;
+    }
+
     setSubmitted(true);
   }
   return (
@@ -90,9 +115,10 @@ export function WaitlistSection() {
               
                 <button
                 type="submit"
-                className="inline-flex min-h-14 items-center justify-center gap-2 rounded-sm bg-[#ff735f] px-5 text-sm font-extrabold text-[#151515] transition-colors hover:bg-[#ff927f] focus:outline-none focus:ring-2 focus:ring-[#ff735f] focus:ring-offset-2 focus:ring-offset-[#151515]">
-                
-                  Join waitlist{' '}
+                disabled={submitting}
+                className="inline-flex min-h-14 items-center justify-center gap-2 rounded-sm bg-[#ff735f] px-5 text-sm font-extrabold text-[#151515] transition-colors hover:bg-[#ff927f] focus:outline-none focus:ring-2 focus:ring-[#ff735f] focus:ring-offset-2 focus:ring-offset-[#151515] disabled:cursor-not-allowed disabled:opacity-60">
+
+                  {submitting ? 'Joining…' : 'Join waitlist'}{' '}
                   <ArrowRightIcon className="h-4 w-4" aria-hidden="true" />
                 </button>
               </div>

@@ -1,7 +1,7 @@
 # Let's Rally — Landing Page
 
 A Vite + React + TypeScript landing page with a Supabase-backed email waitlist,
-deployed to GitHub Pages.
+deployed to Vercel.
 
 ## Getting Started
 
@@ -51,22 +51,20 @@ Find these under **Settings → API** in your Supabase project:
 | `VITE_SUPABASE_ANON_KEY` | `anon` `public` API key        |
 
 - **Local:** put them in `.env.local`.
-- **Production:** add both as GitHub Actions secrets (see below).
+- **Production:** add both as environment variables in the Vercel project (see
+  the deployment guide below).
 
-## Deploying to GitHub Pages
+## Deploying to Vercel
 
-Deployment is automated via `.github/workflows/deploy.yml`, which builds the site
-and publishes it on every push to `main`.
+Vercel auto-detects Vite and builds on every push once the GitHub repo is
+connected — no workflow file required. Build settings are pinned in
+`vercel.json`.
 
-One-time setup:
+The full click-by-click walkthrough is in **[`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md)**.
+The short version:
 
-1. **Repo → Settings → Pages → Build and deployment → Source:** select
-   **GitHub Actions**.
-2. **Repo → Settings → Secrets and variables → Actions → New repository secret:**
-   add `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY`. These are inlined into
-   the bundle at build time, so they must be present for the waitlist to work in
-   production.
-
-The site is served from `https://letsrallyapp.github.io/landing-page/`. The base
-path is configured in `vite.config.ts` (`base: '/landing-page/'`). If you move to
-a custom domain or a `letsrallyapp.github.io` user repo, change `base` to `'/'`.
+1. Import the repo at [vercel.com/new](https://vercel.com/new).
+2. Add `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` as environment variables
+   (they're inlined into the bundle at build time).
+3. Deploy. Every push to `main` redeploys automatically; pull requests get
+   preview URLs.

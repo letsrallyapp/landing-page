@@ -1,7 +1,7 @@
-import React, { FormEvent, useState } from 'react';
+import React, { useState } from 'react';
 import { ArrowRightIcon, CheckIcon } from 'lucide-react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { supabase } from '../lib/supabase';
+import { isSupabaseConfigured, supabase } from '../lib/supabase';
 export function WaitlistSection() {
   const [email, setEmail] = useState('');
   const [submitted, setSubmitted] = useState(false);
@@ -9,36 +9,32 @@ export function WaitlistSection() {
   const [error, setError] = useState('');
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const trimmedEmail = email.trim();
-    const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedEmail);
+    const normalizedEmail = email.trim().toLowerCase();
+    const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(normalizedEmail);
     if (!validEmail) {
       setError('Enter a valid email address.');
       return;
     }
-    setError('');
-
     if (!supabase) {
-      setError('Waitlist is not configured yet. Please try again later.');
+      setError('The waitlist is not configured yet. Please check back soon.');
       return;
     }
-
+    setError('');
     setSubmitting(true);
-    const { error: insertError } = await supabase
-      .from('waitlist')
-      .insert({ email: trimmedEmail.toLowerCase() });
-    setSubmitting(false);
-
-    if (insertError) {
-      // Postgres unique_violation — email is already on the list.
-      if (insertError.code === '23505') {
-        setSubmitted(true);
+    try {
+      const { error: insertError } = await supabase.from('waitlist').insert({
+        email: normalizedEmail
+      });
+      if (insertError && insertError.code !== '23505') {
+        setError('Something went wrong. Please try again.');
         return;
       }
-      setError('Something went wrong. Please try again.');
-      return;
+      setSubmitted(true);
+    } catch {
+      setError('We could not reach the waitlist. Please try again.');
+    } finally {
+      setSubmitting(false);
     }
-
-    setSubmitted(true);
   }
   return (
     <section
@@ -47,16 +43,16 @@ export function WaitlistSection() {
       
       <div className="mx-auto max-w-3xl px-5 text-center sm:px-8">
         <p className="text-xs font-extrabold uppercase tracking-[0.18em] text-[#ff735f]">
-          Coming soon to your city
+          More time with your people, coming soon
         </p>
         <h2 className="mt-5 font-display text-5xl font-black leading-[0.9] tracking-[-0.055em] sm:text-7xl">
-          Be first in
+          The good plans
           <br />
-          the group chat.
+          are the <span className="text-[#ff735f]">easy</span> ones.
         </h2>
         <p className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-[#f8f2e9]/70">
-          Join the waitlist for early access, launch news, and a little
-          something for bringing the first rally.
+          Join the waitlist and be among the first to make room for more
+          spontaneous, meaningful time with the friends you already miss.
         </p>
         <AnimatePresence mode="wait">
           {submitted ?
@@ -82,7 +78,7 @@ export function WaitlistSection() {
                   You’re on the list.
                 </strong>
                 <span className="text-sm font-semibold">
-                  We’ll rally your inbox when it’s time.
+                  We’ll be in touch when Rally is ready for your crew.
                 </span>
               </span>
             </motion.div> :
@@ -111,14 +107,15 @@ export function WaitlistSection() {
                 placeholder="your@email.com"
                 aria-describedby={error ? 'email-error' : undefined}
                 aria-invalid={Boolean(error)}
-                className="min-h-14 flex-1 rounded-sm border-2 border-transparent bg-[#f8f2e9] px-4 text-base font-semibold text-[#151515] placeholder:text-[#151515]/45 focus:border-[#ff735f] focus:outline-none focus:ring-2 focus:ring-[#ff735f] focus:ring-offset-2 focus:ring-offset-[#151515]" />
+                disabled={submitting}
+                className="min-h-14 flex-1 rounded-sm border-2 border-transparent bg-[#f8f2e9] px-4 text-base font-semibold text-[#151515] placeholder:text-[#151515]/45 focus:border-[#ff735f] focus:outline-none focus:ring-2 focus:ring-[#ff735f] focus:ring-offset-2 focus:ring-offset-[#151515] disabled:cursor-not-allowed disabled:opacity-60" />
               
                 <button
                 type="submit"
                 disabled={submitting}
                 className="inline-flex min-h-14 items-center justify-center gap-2 rounded-sm bg-[#ff735f] px-5 text-sm font-extrabold text-[#151515] transition-colors hover:bg-[#ff927f] focus:outline-none focus:ring-2 focus:ring-[#ff735f] focus:ring-offset-2 focus:ring-offset-[#151515] disabled:cursor-not-allowed disabled:opacity-60">
-
-                  {submitting ? 'Joining…' : 'Join waitlist'}{' '}
+                
+                  {submitting ? 'Joining…' : 'Join waitlist'}
                   <ArrowRightIcon className="h-4 w-4" aria-hidden="true" />
                 </button>
               </div>
@@ -131,9 +128,16 @@ export function WaitlistSection() {
                   {error}
                 </p>
             }
-              <p className="mt-3 text-center text-xs text-[#f8f2e9]/45">
-                No spam. Just the invitation.
-              </p>
+              {!isSupabaseConfigured &&
+            <p className="mt-3 text-center text-xs text-[#f8f2e9]/45">
+                  Waitlist signup will open once the service is configured.
+                </p>
+            }
+              {isSupabaseConfigured &&
+            <p className="mt-3 text-center text-xs text-[#f8f2e9]/45">
+                  No spam. Just the invitation.
+                </p>
+            }
             </motion.form>
           }
         </AnimatePresence>

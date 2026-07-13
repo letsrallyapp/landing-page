@@ -14,16 +14,10 @@ export function App() {
       behavior: 'smooth',
       block: 'center'
     });
-    window.setTimeout(
-      () => document.getElementById('waitlist-email')?.focus(),
-      500
-    );
+    window.setTimeout(() => document.getElementById('waitlist-email')?.focus(), 500);
   }
-  return (
-    <div className="min-h-screen w-full bg-[#151515] font-sans">
-      <a
-        href="#main-content"
-        className="sr-only z-50 rounded-sm bg-[#ff735f] px-4 py-3 font-bold text-[#151515] focus:not-sr-only focus:fixed focus:left-4 focus:top-4">
+  return <div className="min-h-screen w-full bg-[#151515] font-sans">
+      <a href="#main-content" className="sr-only z-50 rounded-sm bg-[#ff735f] px-4 py-3 font-bold text-[#151515] focus:not-sr-only focus:fixed focus:left-4 focus:top-4">
         
         Skip to main content
       </a>
@@ -37,6 +31,5 @@ export function App() {
         </div>
       </div>
       <Footer />
-    </div>);
-
+    </div>;
 }

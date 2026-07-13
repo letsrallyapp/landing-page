@@ -26,19 +26,20 @@ export function Hero({ onWaitlistClick }: HeroProps) {
             }}>
             
             <p className="mb-6 flex items-center gap-2 text-xs font-extrabold uppercase tracking-[0.18em] text-[#ff735f]">
-              <SparklesIcon className="h-4 w-4" aria-hidden="true" /> Your
-              people are waiting
+              <SparklesIcon className="h-4 w-4" aria-hidden="true" /> For the
+              friends you want to see more
             </p>
             <h1 className="max-w-3xl font-display text-5xl font-black leading-[0.88] tracking-[-0.055em] sm:text-7xl lg:text-[5.6rem]">
-              Make plans
+              More hangs.
               <br />
-              that <span className="text-[#ff735f]">actually</span>
+              Less <span className="text-[#ff735f]">back-and-</span>
               <br />
-              happen.
+              forth.
             </h1>
             <p className="mt-7 max-w-lg text-lg leading-relaxed text-[#f8f2e9]/73">
-              Rally connects the friends who are into your kind of plan, then
-              gives that event its own temporary place to coordinate.
+              Float a taco run, a walk, or a last-minute dinner. Rally brings in
+              the friends who are up for it, then gives the plan one temporary
+              chat to make it happen.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <button
@@ -53,15 +54,12 @@ export function Hero({ onWaitlistClick }: HeroProps) {
                 href="#why-rally"
                 className="rounded-sm border border-white/25 px-5 py-3.5 text-sm font-extrabold transition-colors hover:border-white/60 hover:bg-white/5 focus:outline-none focus:ring-2 focus:ring-[#ff735f]">
                 
-                See how it works
+                See Rally in action
               </a>
             </div>
             <StoreLinks className="mt-8" />
           </motion.div>
           <div className="relative flex justify-center lg:justify-end">
-            <p className="absolute -left-1 top-10 hidden max-w-[130px] rotate-[-8deg] font-display text-xl font-black leading-none text-[#ffdd57] lg:block">
-              the group chat’s favorite new member
-            </p>
             <PhonePreview />
           </div>
         </div>

@@ -2,7 +2,6 @@ import React from 'react';
 import { ArrowDownIcon, SparklesIcon } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { PhonePreview } from './PhonePreview';
-import { StoreLinks } from './StoreLinks';
 type HeroProps = {
   onWaitlistClick: () => void;
 };
@@ -47,7 +46,7 @@ export function Hero({ onWaitlistClick }: HeroProps) {
                 onClick={onWaitlistClick}
                 className="inline-flex items-center gap-2 rounded-sm bg-[#ff735f] px-5 py-3.5 text-sm font-extrabold text-[#151515] transition-colors hover:bg-[#ff927f] focus:outline-none focus:ring-2 focus:ring-[#ff735f] focus:ring-offset-2 focus:ring-offset-[#151515]">
                 
-                Get early access{' '}
+                Join the waitlist{' '}
                 <ArrowDownIcon className="h-4 w-4" aria-hidden="true" />
               </button>
               <a
@@ -57,7 +56,6 @@ export function Hero({ onWaitlistClick }: HeroProps) {
                 See Rally in action
               </a>
             </div>
-            <StoreLinks className="mt-8" />
           </motion.div>
           <div className="relative flex justify-center lg:justify-end">
             <PhonePreview />

@@ -6,7 +6,7 @@ const stories = [{
   icon: UsersRoundIcon,
   eyebrow: 'The right invite, automatically',
   title: 'Your friends already told Rally what they’re into.',
-  copy: 'Choose Taco Night, hiking, brunch, or whatever’s next. Rally starts with the people who are actually interested — without making you guess who to text.',
+  copy: 'Choose Board Game Night, pickup basketball, brunch, or whatever’s next. Rally starts with the people who are actually interested — without making you guess who to text.',
   accent: 'bg-[#ff735f]',
   people: [{
     name: 'Sarah',
@@ -15,7 +15,7 @@ const stories = [{
     name: 'Chloe',
     avatar: 'https://i.pravatar.cc/150?u=chloe'
   }],
-  detail: 'Sarah + Chloe are into Taco Night'
+  detail: 'Sarah + Chloe are into Board Game Night'
 }, {
   number: '02',
   icon: MessageCircleIcon,
@@ -33,7 +33,7 @@ const stories = [{
     name: 'Emma',
     avatar: 'https://i.pravatar.cc/150?u=emma'
   }],
-  detail: 'Taco Night chat · closes after the event'
+  detail: 'Board Game Night chat · closes after the event'
 }];
 export function FeatureSection() {
   return <section id="why-rally" className="bg-[#f8f2e9] py-20 text-[#151515] sm:py-28">

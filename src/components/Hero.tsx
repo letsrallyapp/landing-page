@@ -36,9 +36,9 @@ export function Hero({ onWaitlistClick }: HeroProps) {
               forth.
             </h1>
             <p className="mt-7 max-w-lg text-lg leading-relaxed text-[#f8f2e9]/73">
-              Float a taco run, a walk, or a last-minute dinner. Rally brings in
-              the friends who are up for it, then gives the plan one temporary
-              chat to make it happen.
+              Float a coffee run, a sunset walk, or a last-minute movie. Rally
+              brings in the friends who are up for it, then gives the plan one
+              temporary chat to make it happen.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <button

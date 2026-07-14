@@ -15,7 +15,7 @@ export function HowItWorks() {
             More hanging out.
           </h2>
           <p className="mt-6 max-w-sm text-lg leading-relaxed text-[#151515]/75">
-            Rally is for the happy hour, the extra dinner seat, and the
+            Rally is for the happy hour, the Saturday hike, and the
             last-minute “come meet us” — the little plans that make a week
             better.
           </p>

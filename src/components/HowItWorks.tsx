@@ -1,6 +1,6 @@
 import React from 'react';
 import { CheckCircle2Icon } from 'lucide-react';
-const steps = [['Float the idea', 'Tacos tonight? A walk after work? Pick a plan while it is still fresh — no big production required.'], ['Find the right few', 'Rally can invite friends who are into that kind of hang, or you can choose exactly who gets the nudge.'], ['Make it easy', 'One temporary chat keeps the little details moving until everyone is together — then gets out of the way.']];
+const steps = [['Float the idea', 'Trivia tonight? A bike ride this weekend? Pick a plan while it is still fresh — no big production required.'], ['Find the right few', 'Rally can invite friends who are into that kind of hang, or you can choose exactly who gets the nudge.'], ['Make it easy', 'One temporary chat keeps the little details moving until everyone is together — then gets out of the way.']];
 export function HowItWorks() {
   return <section id="how-it-works" className="bg-[#ffdd57] py-20 text-[#151515] sm:py-28">
       
@@ -15,7 +15,7 @@ export function HowItWorks() {
             More hanging out.
           </h2>
           <p className="mt-6 max-w-sm text-lg leading-relaxed text-[#151515]/75">
-            Rally is for the coffee run, the extra dinner seat, and the
+            Rally is for the happy hour, the extra dinner seat, and the
             last-minute “come meet us” — the little plans that make a week
             better.
           </p>

@@ -13,20 +13,12 @@ export function Footer() {
                 let’s rally
               </span>
             </a>
-            <p className="mt-3 max-w-sm text-sm leading-relaxed text-[#f8f2e9]/55">
-              The event creator for people who believe getting together is kind
-              of everything.
-            </p>
+            <a href="mailto:hello@letsrallyapp.com" className="mt-3 inline-block w-fit rounded-sm text-sm font-medium text-[#f8f2e9]/55 transition-colors hover:text-[#ff735f] focus:outline-none focus:ring-2 focus:ring-[#ff735f]">
+              hello@letsrallyapp.com
+            </a>
           </div>
           <a href="#waitlist" className="w-fit rounded-sm bg-[#ff735f] px-5 py-3 text-sm font-extrabold text-[#151515] transition-colors hover:bg-[#ff927f] focus:outline-none focus:ring-2 focus:ring-[#ff735f] focus:ring-offset-2 focus:ring-offset-[#151515]">
             Join the waitlist
-          </a>
-        </div>
-        <div className="mt-12 flex flex-col gap-3 border-t border-white/10 pt-6 text-xs font-medium text-[#f8f2e9]/45 sm:flex-row sm:items-center sm:justify-between">
-          <p>© 2026 Let’s Rally. Make a plan.</p>
-          <a href="mailto:hello@letsrally.app" className="w-fit rounded-sm transition-colors hover:text-[#ff735f] focus:outline-none focus:ring-2 focus:ring-[#ff735f]">
-            
-            hello@letsrally.app
           </a>
         </div>
       </div>

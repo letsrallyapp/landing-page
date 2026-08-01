@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { ArrowRightIcon, CheckIcon } from 'lucide-react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { isSupabaseConfigured, supabase } from '../lib/supabase';
+import { isLoopsConfigured, joinWaitlist } from '../lib/loops';
 export function WaitlistSection() {
   const [email, setEmail] = useState('');
   const [submitted, setSubmitted] = useState(false);
@@ -15,21 +15,21 @@ export function WaitlistSection() {
       setError('Enter a valid email address.');
       return;
     }
-    if (!supabase) {
+    if (!isLoopsConfigured) {
       setError('The waitlist is not configured yet. Please check back soon.');
       return;
     }
     setError('');
     setSubmitting(true);
     try {
-      const { error: insertError } = await supabase.from('waitlist').insert({
-        email: normalizedEmail
-      });
-      if (insertError && insertError.code !== '23505') {
+      const result = await joinWaitlist(normalizedEmail);
+      if (result.ok) {
+        setSubmitted(true);
+      } else if (result.rateLimited) {
+        setError('Too many attempts. Please wait a moment and try again.');
+      } else {
         setError('Something went wrong. Please try again.');
-        return;
       }
-      setSubmitted(true);
     } catch {
       setError('We could not reach the waitlist. Please try again.');
     } finally {
@@ -128,12 +128,12 @@ export function WaitlistSection() {
                   {error}
                 </p>
             }
-              {!isSupabaseConfigured &&
+              {!isLoopsConfigured &&
             <p className="mt-3 text-center text-xs text-[#f8f2e9]/45">
                   Waitlist signup will open once the service is configured.
                 </p>
             }
-              {isSupabaseConfigured &&
+              {isLoopsConfigured &&
             <p className="mt-3 text-center text-xs text-[#f8f2e9]/45">
                   No spam. Just the invitation.
                 </p>

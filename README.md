@@ -1,59 +1,42 @@
 # Let's Rally — Landing Page
 
-A Vite + React + TypeScript landing page with a Supabase-backed email waitlist,
+A Vite + React + TypeScript landing page with a Loops-backed email waitlist,
 deployed to Vercel.
 
 ## Getting Started
 
 1. Run `npm install`
-2. Copy `.env.example` to `.env.local` and fill in your Supabase credentials
+2. Copy `.env.example` to `.env.local` and fill in your Loops form endpoint
 3. Run `npm run dev`
 
-## Waitlist (Supabase)
+## Waitlist (Loops)
 
-The waitlist form (`src/components/WaitlistSection.tsx`) writes emails directly
-to a Supabase table from the browser. The **publishable** key
-(`sb_publishable_...`) is safe to ship in the client — access is restricted by
-Row Level Security (RLS). Never expose the **secret** key (`sb_secret_...`); it
-bypasses RLS and is for server-side use only.
+The waitlist form (`src/components/WaitlistSection.tsx`) submits emails directly
+to a [Loops](https://loops.so) **form endpoint** from the browser. Loops stores
+your contacts and lets you email them at launch — and, unlike a free-tier
+database, it never pauses for inactivity.
 
-### 1. Create the table
+The form endpoint URL is safe to ship in the client: it only accepts contact
+sign-ups and cannot read your list. There is no secret key in the frontend.
 
-In the Supabase dashboard, open the **SQL Editor** and run:
+### 1. Create a Loops form
 
-```sql
-create table if not exists public.waitlist (
-  id uuid primary key default gen_random_uuid(),
-  email text not null unique,
-  created_at timestamptz not null default now()
-);
+1. In [Loops](https://app.loops.so), go to **Forms → New form** (an "API only"
+   form is fine — you don't have to use Loops' hosted form UI).
+2. Open the form's **Settings** tab and copy the **Form Endpoint URL**. It looks
+   like `https://app.loops.so/api/newsletter-form/<formId>`.
 
--- Turn on Row Level Security.
-alter table public.waitlist enable row level security;
+Re-submitting an existing contact still returns success, so users who sign up
+twice simply see the confirmation again — no duplicate handling needed.
 
--- Allow anyone (publishable key → anon role) to add themselves, but nothing else.
--- No select/update/delete policy means the public cannot read the email list.
-create policy "Public can join the waitlist"
-  on public.waitlist
-  for insert
-  to anon
-  with check (true);
-```
+### 2. Set the environment variable
 
-The form treats a unique-violation (duplicate email) as a successful signup, so
-users who re-submit still see the confirmation.
+| Variable                   | Value                                             |
+| -------------------------- | ------------------------------------------------- |
+| `VITE_LOOPS_FORM_ENDPOINT` | The Loops Form Endpoint URL from step 1           |
 
-### 2. Set the environment variables
-
-Find these under **Project Settings → API Keys** in your Supabase project:
-
-| Variable                        | Value                                    |
-| ------------------------------- | ---------------------------------------- |
-| `VITE_SUPABASE_URL`             | Project URL                              |
-| `VITE_SUPABASE_PUBLISHABLE_KEY` | Publishable key (`sb_publishable_...`)   |
-
-- **Local:** put them in `.env.local`.
-- **Production:** add both as environment variables in the Vercel project (see
+- **Local:** put it in `.env.local`.
+- **Production:** add it as an environment variable in the Vercel project (see
   the deployment guide below).
 
 ## Deploying to Vercel
@@ -66,7 +49,7 @@ The full click-by-click walkthrough is in **[`docs/DEPLOYMENT.md`](docs/DEPLOYME
 The short version:
 
 1. Import the repo at [vercel.com/new](https://vercel.com/new).
-2. Add `VITE_SUPABASE_URL` and `VITE_SUPABASE_PUBLISHABLE_KEY` as environment
-   variables (they're inlined into the bundle at build time).
+2. Add `VITE_LOOPS_FORM_ENDPOINT` as an environment variable (it's inlined into
+   the bundle at build time).
 3. Deploy. Every push to `main` redeploys automatically; pull requests get
    preview URLs.

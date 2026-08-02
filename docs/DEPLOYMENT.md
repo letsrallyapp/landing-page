@@ -1,72 +1,46 @@
-# Deployment Guide — Supabase + Vercel
+# Deployment Guide — Loops + Vercel
 
 A step-by-step walkthrough to take this landing page live with a working email
-waitlist. Do the **Supabase** part first (it gives you the keys), then **Vercel**.
+waitlist. Do the **Loops** part first (it gives you the form endpoint), then
+**Vercel**.
 
-Estimated time: ~15 minutes. You'll need a GitHub account (you have one), a
-Supabase account, and a Vercel account — both are free to sign up.
+Estimated time: ~10 minutes. You'll need a GitHub account (you have one), a
+Loops account, and a Vercel account — both are free to sign up.
+
+> **Why Loops?** A landing page waitlist gets occasional writes and no reads, so
+> a free-tier database (like Supabase) pauses itself for inactivity and has to be
+> manually restored. Loops is built for collecting contacts and emailing them —
+> it never pauses, and it handles the "we're live" announcement you'll send these
+> people later.
 
 ---
 
-## Part 1 — Supabase (the waitlist database)
+## Part 1 — Loops (the waitlist)
 
-### 1.1 Create a project
+### 1.1 Create an account and a form
 
-1. Go to [supabase.com](https://supabase.com) and sign in (you can sign in with
-   GitHub).
-2. Click **New project**.
-3. Pick your organization, give the project a name (e.g. `letsrally-waitlist`),
-   and set a database password (save it in a password manager — you won't need
-   it for this guide, but you'll want it later).
-4. Choose the region closest to your users and click **Create new project**.
-5. Wait ~2 minutes for it to finish provisioning.
+1. Go to [loops.so](https://loops.so) and sign up (you can sign in with Google).
+2. In the dashboard sidebar, open **Forms**, then click **New form**.
+3. Give it a name (e.g. `Landing page waitlist`). You don't need to design a
+   hosted form — this app has its own form UI and only needs the endpoint.
 
-### 1.2 Create the waitlist table
+### 1.2 Copy the form endpoint
 
-1. In the left sidebar, open **SQL Editor**.
-2. Click **New query**, paste the following, and click **Run**:
+1. Open the form's **Settings** tab.
+2. Copy the **Form Endpoint URL**. It looks like:
 
-   ```sql
-   create table if not exists public.waitlist (
-     id uuid primary key default gen_random_uuid(),
-     email text not null unique,
-     created_at timestamptz not null default now()
-   );
-
-   -- Turn on Row Level Security.
-   alter table public.waitlist enable row level security;
-
-   -- Allow anyone (publishable key → anon role) to add themselves, but nothing
-   -- else. With no select/update/delete policy, the public cannot read the list.
-   create policy "Public can join the waitlist"
-     on public.waitlist
-     for insert
-     to anon
-     with check (true);
+   ```
+   https://app.loops.so/api/newsletter-form/abc123def456
    ```
 
-3. You should see "Success. No rows returned." That's expected.
+This is the only value the app needs — it's `VITE_LOOPS_FORM_ENDPOINT` in Part 2.
 
-> **Why this is safe:** the app ships the **publishable** key in the browser.
-> This key maps to the `anon` role, and Row Level Security means it can *only*
-> insert rows — it cannot read, edit, or delete anyone's email. You read the list
-> from the Supabase dashboard, which uses the privileged **secret** key that
-> never leaves Supabase.
+> **Why this is safe:** the form endpoint only *accepts* sign-ups. It cannot read
+> your contact list, so it's fine to ship in the browser — there is no secret key
+> in the frontend. You view and export contacts from the Loops dashboard, which
+> is behind your Loops login.
 
-### 1.3 Copy your API keys
-
-1. In the sidebar, go to **Project Settings** (gear icon) → **API Keys**.
-2. Copy these two values — you'll paste them into Vercel in Part 2:
-   - **Project URL** (under **Settings → API**, or **Data API**) → this is
-     `VITE_SUPABASE_URL` (looks like `https://abcdefgh.supabase.co`)
-   - **Publishable key** → this is `VITE_SUPABASE_PUBLISHABLE_KEY`
-     (starts with `sb_publishable_...`)
-
-> **Do not** copy a **secret key** (`sb_secret_...`) — those are for server-side
-> code only and must never go in the frontend or Vercel's build-time env for this
-> app. This client only needs the publishable key.
-
-Keep this tab open, or paste both into a scratch note for the next part.
+Keep this tab open, or paste the URL into a scratch note for the next part.
 
 ---
 
@@ -86,19 +60,18 @@ Vercel auto-detects Vite, so the build settings are already correct (Framework:
 **Vite**, Build Command: `npm run build`, Output Directory: `dist`). You don't
 need to change them — `vercel.json` pins them too.
 
-Before clicking Deploy, expand **Environment Variables** and add both keys from
-Part 1.3:
+Before clicking Deploy, expand **Environment Variables** and add the endpoint
+from Part 1.2:
 
-| Name                            | Value                                       |
-| ------------------------------- | ------------------------------------------- |
-| `VITE_SUPABASE_URL`             | your Supabase Project URL                   |
-| `VITE_SUPABASE_PUBLISHABLE_KEY` | your Supabase publishable key (`sb_publishable_...`) |
+| Name                       | Value                                       |
+| -------------------------- | ------------------------------------------- |
+| `VITE_LOOPS_FORM_ENDPOINT` | your Loops Form Endpoint URL                |
 
 Leave the environment set to **all** (Production, Preview, Development) so
 preview deploys work too.
 
-> **Important:** these are inlined into the JavaScript bundle at *build* time. If
-> you add or change them later, you must trigger a new deploy (see 2.4) for the
+> **Important:** this is inlined into the JavaScript bundle at *build* time. If
+> you add or change it later, you must trigger a new deploy (see 2.4) for the
 > change to take effect.
 
 ### 2.3 Deploy
@@ -121,15 +94,17 @@ get a live URL like `https://landing-page-xxxx.vercel.app`.
 1. Open your live Vercel URL.
 2. Scroll to the waitlist section and submit a test email.
 3. You should see the "You're on the list" confirmation.
-4. Back in Supabase → **Table Editor → waitlist**, you should see the row.
+4. Back in Loops → **Audience** (or **Contacts**), you should see the new
+   contact. It may take a few seconds to appear.
 
 If the form shows an error instead:
-- **"Waitlist is not configured yet"** → the env vars weren't set, or you didn't
-  redeploy after adding them. Check Part 2.2, then redeploy (Part 2.4).
-- **"Something went wrong"** → usually the table or RLS policy is missing.
-  Re-run the SQL in Part 1.2.
-- Open the browser dev tools **Console/Network** tab to see the exact error from
-  Supabase.
+- **"Waitlist is not configured yet"** → the env var wasn't set, or you didn't
+  redeploy after adding it. Check Part 2.2, then redeploy (Part 2.4).
+- **"Too many attempts"** → Loops rate-limits sign-ups per IP address. Wait a
+  minute and try again.
+- **"Something went wrong"** → double-check the endpoint URL was copied in full.
+  Open the browser dev tools **Console/Network** tab to see the exact response
+  from Loops.
 
 ---
 
@@ -147,8 +122,9 @@ root path.
 
 ---
 
-## Exporting your waitlist later
+## Emailing your waitlist later
 
-When you're ready to email everyone at launch, in Supabase go to **Table
-Editor → waitlist**, then use the **Export** menu to download a CSV, or run a
-`select email from waitlist order by created_at;` query in the SQL Editor.
+This is where Loops pays off. When you're ready to announce launch, create a
+**Campaign** in Loops, target the contacts who joined through the form, and send.
+You can also set up a **Loop** (automation) so new sign-ups get a welcome email
+automatically. No CSV export or separate email tool required.

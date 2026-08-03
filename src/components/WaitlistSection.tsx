@@ -78,7 +78,7 @@ export function WaitlistSection() {
                   You’re on the list.
                 </strong>
                 <span className="text-sm font-semibold">
-                  We’ll be in touch when Rally is ready for your crew.
+                  We’ll be in touch when Let’s Rally is ready for your crew.
                 </span>
               </span>
             </motion.div> :

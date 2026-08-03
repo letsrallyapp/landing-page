@@ -36,8 +36,9 @@ export function Hero({ onWaitlistClick }: HeroProps) {
               forth.
             </h1>
             <p className="mt-7 max-w-lg text-lg leading-relaxed text-[#f8f2e9]/73">
-              Float a coffee run, a sunset walk, or a last-minute movie. Rally
-              brings in the friends who are up for it, then gives the plan one
+              Float a coffee run, a sunset walk, or a last-minute movie. Let’s
+              Rally brings in the friends who are up for it, then gives the plan
+              one
               temporary chat to make it happen.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
@@ -53,7 +54,7 @@ export function Hero({ onWaitlistClick }: HeroProps) {
                 href="#why-rally"
                 className="rounded-sm border border-white/25 px-5 py-3.5 text-sm font-extrabold transition-colors hover:border-white/60 hover:bg-white/5 focus:outline-none focus:ring-2 focus:ring-[#ff735f]">
                 
-                See Rally in action
+                See Let’s Rally in action
               </a>
             </div>
           </motion.div>

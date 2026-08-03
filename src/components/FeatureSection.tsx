@@ -5,8 +5,8 @@ const stories = [{
   number: '01',
   icon: UsersRoundIcon,
   eyebrow: 'The right invite, automatically',
-  title: 'Your friends already told Rally what they’re into.',
-  copy: 'Choose Board Game Night, pickup basketball, brunch, or whatever’s next. Rally starts with the people who are actually interested — without making you guess who to text.',
+  title: 'Your friends already told Let’s Rally what they’re into.',
+  copy: 'Choose Board Game Night, pickup basketball, brunch, or whatever’s next. Let’s Rally starts with the people who are actually interested — without making you guess who to text.',
   accent: 'bg-[#ff735f]',
   people: [{
     name: 'Sarah',
@@ -41,7 +41,7 @@ export function FeatureSection() {
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
         <div className="grid gap-8 border-b-2 border-[#151515] pb-12 md:grid-cols-[0.8fr_1.2fr] md:items-end">
           <p className="text-xs font-extrabold uppercase tracking-[0.18em] text-[#d64f3d]">
-            The Rally difference
+            The Let’s Rally difference
           </p>
           <h2 className="font-display text-4xl font-black leading-[0.92] tracking-[-0.045em] sm:text-6xl">
             The right people for the plan. One place to make it happen.

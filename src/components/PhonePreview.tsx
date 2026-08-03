@@ -59,7 +59,7 @@ export function PhonePreview() {
             <div className="mb-4 flex items-center gap-2 rounded-sm bg-[#ffdd57] px-3 py-2 text-[10px] font-extrabold text-[#151515]">
               <SparklesIcon className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
               
-              Rally invited friends into Taco Night
+              Let’s Rally invited friends into Taco Night
             </div>
 
             <div className="space-y-3 text-[11px]">

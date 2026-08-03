@@ -22,7 +22,7 @@ export function Header({
           
           <a className="rounded-sm transition-colors hover:text-[#ff735f] focus:outline-none focus:ring-2 focus:ring-[#ff735f]" href="#why-rally">
             
-            Why Rally
+            Why Let’s Rally
           </a>
           <a className="rounded-sm transition-colors hover:text-[#ff735f] focus:outline-none focus:ring-2 focus:ring-[#ff735f]" href="#how-it-works">
             

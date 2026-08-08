@@ -62,9 +62,10 @@ must stay in sync with the app's `src/lib/inviteAttribution.ts`. See
 | ----------------------- | --------------------------------------------------------------- |
 | `VITE_IOS_APP_STORE_ID` | Numeric App Store id (`apps.apple.com/app/id<ID>`), digits only |
 
-`VITE_IOS_APP_STORE_ID` is optional: until it's set, iOS invite links still set
-the clipboard sentinel and show the "get the app" page instead of redirecting to
-the App Store.
+`VITE_IOS_APP_STORE_ID` is optional — the current App Store id is baked into
+`src/lib/invite.ts`, so set this only to override it. If neither is a valid id,
+iOS invite links still set the clipboard sentinel and show the "get the app"
+page instead of redirecting to the App Store.
 
 ## Deploying to Vercel
 

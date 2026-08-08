@@ -16,10 +16,11 @@
 // Android package name (stable — the Play Store install referrer carries the code).
 export const ANDROID_PACKAGE = 'com.letsrallyapp.mobile';
 
-// iOS App Store numeric id (e.g. the 123456789 in apps.apple.com/app/id123456789).
-// Not yet minted at time of writing (LET-78 "Needs"), so it's read from the
-// environment and inlined at build time. When unset, the iOS/desktop flows fall
-// back to a "get the app" page instead of a broken store redirect.
+// iOS App Store numeric id (the 123456789 in apps.apple.com/app/id123456789) —
+// Rally's App Store Connect "Apple ID". Overridable via VITE_IOS_APP_STORE_ID
+// (inlined at build time) if it ever changes.
+const DEFAULT_IOS_APP_STORE_ID = '6787239077';
+
 const environment =
   typeof import.meta !== 'undefined' ? import.meta.env ?? {} : {};
 
@@ -28,7 +29,7 @@ const rawAppStoreId = environment.VITE_IOS_APP_STORE_ID;
 export const IOS_APP_STORE_ID =
   typeof rawAppStoreId === 'string' && /^\d+$/.test(rawAppStoreId.trim())
     ? rawAppStoreId.trim()
-    : undefined;
+    : DEFAULT_IOS_APP_STORE_ID;
 
 export type Platform = 'ios' | 'android' | 'other';
 

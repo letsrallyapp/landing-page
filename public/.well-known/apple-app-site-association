@@ -1,0 +1,16 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appIDs": ["6F4NJ4434B.com.letsrallyapp.mobile"],
+        "components": [
+          {
+            "/": "/invite/*",
+            "comment": "Rally invite links — open the app when installed (LET-65)"
+          }
+        ]
+      }
+    ]
+  }
+}

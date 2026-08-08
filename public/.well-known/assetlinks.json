@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.letsrallyapp.mobile",
+      "sha256_cert_fingerprints": [
+        "B2:60:EB:40:5F:98:33:AB:91:9F:AB:C6:31:2D:60:5E:7F:85:F4:C2:27:A4:CA:D5:C9:98:51:1E:7E:33:1F:0E"
+      ]
+    }
+  }
+]

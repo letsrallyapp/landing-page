@@ -39,6 +39,33 @@ twice simply see the confirmation again — no duplicate handling needed.
 - **Production:** add it as an environment variable in the Vercel project (see
   the deployment guide below).
 
+## Invite links (`/invite/<code>`)
+
+`/invite/<code>` is the page a **non-user** lands on when they open a Rally
+invite link without the app installed (LET-78). When the app _is_ installed,
+Universal/App Links open it directly and this page never renders.
+
+Its only job is to carry the invite code across the install boundary and send
+the visitor to the right store:
+
+- **Android** → Play Store with the install referrer `rally_invite=<code>`.
+- **iOS** → writes the `rally-invite:<code>` clipboard sentinel (best-effort),
+  then redirects to the App Store. Manual entry of the shown code is the
+  guaranteed fallback.
+- **Desktop / other** → a "get the app" page with store links.
+
+The code format (8-char Crockford base32) and the referrer/clipboard carriers
+must stay in sync with the app's `src/lib/inviteAttribution.ts`. See
+`src/lib/invite.ts`.
+
+| Variable                | Value                                                            |
+| ----------------------- | --------------------------------------------------------------- |
+| `VITE_IOS_APP_STORE_ID` | Numeric App Store id (`apps.apple.com/app/id<ID>`), digits only |
+
+`VITE_IOS_APP_STORE_ID` is optional: until it's set, iOS invite links still set
+the clipboard sentinel and show the "get the app" page instead of redirecting to
+the App Store.
+
 ## Deploying to Vercel
 
 Vercel auto-detects Vite and builds on every push once the GitHub repo is

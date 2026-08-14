@@ -21,6 +21,17 @@ export function Footer() {
             Join the waitlist
           </a>
         </div>
+        <nav className="mt-8 flex flex-wrap gap-x-6 gap-y-2 text-sm font-medium text-[#f8f2e9]/55" aria-label="Legal">
+          <a href="/terms" className="rounded-sm transition-colors hover:text-[#ff735f] focus:outline-none focus:ring-2 focus:ring-[#ff735f]">
+            Terms of Service
+          </a>
+          <a href="/privacy" className="rounded-sm transition-colors hover:text-[#ff735f] focus:outline-none focus:ring-2 focus:ring-[#ff735f]">
+            Privacy Policy
+          </a>
+          <a href="/eula" className="rounded-sm transition-colors hover:text-[#ff735f] focus:outline-none focus:ring-2 focus:ring-[#ff735f]">
+            EULA
+          </a>
+        </nav>
       </div>
     </footer>;
 }

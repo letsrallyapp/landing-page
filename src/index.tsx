@@ -3,9 +3,22 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { App } from "./App";
 import { InvitePage } from "./components/InvitePage";
+import { LegalPage } from "./components/LegalPage";
+import { legalDocFromPath } from "./lib/legalContent";
 
 const rootEl = document.getElementById("root");
 if (rootEl) {
-  const isInvite = /^\/invite\//i.test(window.location.pathname);
-  ReactDOM.createRoot(rootEl).render(isInvite ? <InvitePage /> : <App />);
+  const path = window.location.pathname;
+  const isInvite = /^\/invite\//i.test(path);
+  const legalDoc = legalDocFromPath(path);
+
+  const page = isInvite ? (
+    <InvitePage />
+  ) : legalDoc ? (
+    <LegalPage doc={legalDoc} />
+  ) : (
+    <App />
+  );
+
+  ReactDOM.createRoot(rootEl).render(page);
 }

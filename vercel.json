@@ -9,5 +9,10 @@
       "headers": [{ "key": "Content-Type", "value": "application/json" }]
     }
   ],
-  "rewrites": [{ "source": "/invite/(.*)", "destination": "/index.html" }]
+  "rewrites": [
+    { "source": "/invite/(.*)", "destination": "/index.html" },
+    { "source": "/terms", "destination": "/index.html" },
+    { "source": "/privacy", "destination": "/index.html" },
+    { "source": "/eula", "destination": "/index.html" }
+  ]
 }

@@ -13,6 +13,7 @@
     { "source": "/invite/(.*)", "destination": "/index.html" },
     { "source": "/terms", "destination": "/index.html" },
     { "source": "/privacy", "destination": "/index.html" },
-    { "source": "/eula", "destination": "/index.html" }
+    { "source": "/eula", "destination": "/index.html" },
+    { "source": "/delete-account", "destination": "/index.html" }
   ]
 }

@@ -31,6 +31,9 @@ export function Footer() {
           <a href="/eula" className="rounded-sm transition-colors hover:text-[#ff735f] focus:outline-none focus:ring-2 focus:ring-[#ff735f]">
             EULA
           </a>
+          <a href="/support" className="rounded-sm transition-colors hover:text-[#ff735f] focus:outline-none focus:ring-2 focus:ring-[#ff735f]">
+            Support
+          </a>
           <a href="/delete-account" className="rounded-sm transition-colors hover:text-[#ff735f] focus:outline-none focus:ring-2 focus:ring-[#ff735f]">
             Delete Account
           </a>

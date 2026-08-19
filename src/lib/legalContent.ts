@@ -107,8 +107,10 @@ export const LEGAL_DOCUMENTS: Record<LegalDoc, LegalDocument> = {
   privacy: {
     id: "privacy",
     title: "Privacy Policy",
-    version: "2026-08-14",
-    effectiveDate: "August 14, 2026",
+    version: "2026-08-19",
+    effectiveDate: "August 19, 2026",
+    changeNote:
+      "Clarified that contact matching uses hashed, non-stored phone numbers, and added device tokens used for push notifications to the list of information we collect.",
     intro: `This Privacy Policy explains what information ${COMPANY} collects, how we use it, and the choices you have. It applies to your use of the ${COMPANY} app and services.`,
     sections: [
       {
@@ -116,7 +118,8 @@ export const LEGAL_DOCUMENTS: Record<LegalDoc, LegalDocument> = {
         paragraphs: [
           "Account information: your email address, and optionally a verified phone number.",
           "Profile information: your display name, avatar image, interests, and date of birth (used for age verification).",
-          "Contacts (optional): if you grant permission, phone numbers from your contacts are used to help you find friends already on Rally. This is optional and can be declined.",
+          "Contacts (optional): if you grant permission, phone numbers from your contacts are hashed on your device and checked against our existing userbase to help you find friends already on Rally. We do not store your contacts' phone numbers. This is optional and can be declined.",
+          "Device information: a device token used to deliver push notifications you have enabled.",
           "Content: rallies you create, RSVPs, and chat messages.",
           "Usage and diagnostics: product analytics and error diagnostics to operate and improve the Service.",
         ],

@@ -1,14 +1,13 @@
 import React, { useEffect } from 'react';
 import type { LegalDocument } from '../lib/legalContent';
-import { LEGAL_DOCUMENTS } from '../lib/legalContent';
+import { LEGAL_DOCUMENTS, sectionAnchor } from '../lib/legalContent';
 
 type LegalPageProps = { doc: LegalDocument };
 
 /**
  * Renders a published legal document (Terms / Privacy / EULA) at a stable URL.
  * The URL is stable; the content is versioned — the document states its version
- * and effective date, which the mobile app records on consent (LET-120). A
- * visible DRAFT banner marks the placeholder text as pending legal review.
+ * and effective date, which the mobile app records on consent (LET-120).
  */
 export function LegalPage({ doc }: LegalPageProps) {
   useEffect(() => {
@@ -45,27 +44,39 @@ export function LegalPage({ doc }: LegalPageProps) {
       </header>
 
       <main className="mx-auto max-w-3xl px-5 py-12 sm:px-8">
-        <div
-          role="note"
-          className="mb-8 rounded-lg border border-[#ff735f]/40 bg-[#ff735f]/10 px-4 py-3 text-sm text-[#f8f2e9]/90"
-        >
-          <strong className="font-extrabold text-[#ff735f]">DRAFT</strong> —
-          this document is a placeholder pending legal review and is not the
-          final policy.
-        </div>
-
         <h1 className="font-display text-4xl font-black tracking-tight sm:text-5xl">
           {doc.title}
         </h1>
         <p className="mt-3 text-sm text-[#f8f2e9]/55">
           Version {doc.version} · Effective {doc.effectiveDate}
         </p>
+        {doc.changeNote && (
+          <p className="mt-1 text-sm italic text-[#f8f2e9]/55">
+            What changed: {doc.changeNote}
+          </p>
+        )}
 
         <p className="mt-8 text-base leading-7 text-[#f8f2e9]/85">{doc.intro}</p>
 
+        <nav aria-label="Table of contents" className="mt-8">
+          <p className="text-sm font-semibold text-[#f8f2e9]/55">Contents</p>
+          <ol className="mt-3 space-y-1.5">
+            {doc.sections.map((section) => (
+              <li key={section.heading}>
+                <a
+                  href={`#${sectionAnchor(section.heading)}`}
+                  className="rounded-sm text-sm text-[#f8f2e9]/80 underline decoration-[#f8f2e9]/30 underline-offset-2 transition-colors hover:text-[#ff735f] focus:outline-none focus:ring-2 focus:ring-[#ff735f]"
+                >
+                  {section.heading}
+                </a>
+              </li>
+            ))}
+          </ol>
+        </nav>
+
         <div className="mt-8 space-y-8">
           {doc.sections.map((section) => (
-            <section key={section.heading}>
+            <section key={section.heading} id={sectionAnchor(section.heading)}>
               <h2 className="font-display text-xl font-extrabold tracking-tight">
                 {section.heading}
               </h2>

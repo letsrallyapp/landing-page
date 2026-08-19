@@ -20,21 +20,33 @@ export type LegalDocument = {
   /** Must match the app's LEGAL_VERSIONS value for this document. */
   version: string;
   effectiveDate: string;
+  /** Short note on what changed in this version, shown to returning readers. Omit for a document's first published version. */
+  changeNote?: string;
   intro: string;
   sections: LegalSection[];
 };
 
+/** Stable anchor id for a section heading, e.g. "1. Eligibility" -> "1-eligibility". */
+export function sectionAnchor(heading: string): string {
+  return heading
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
 const COMPANY = "Let's Rally";
 const CONTACT = "support@letsrallyapp.com";
-const VERSION = "2026-08-14";
-const EFFECTIVE = "August 14, 2026";
 
+// Each document tracks its own version and effective date, independent of
+// the others. Bump only the version(s) for the document(s) whose substance
+// actually changed — bumping a shared value here would falsely re-prompt
+// users for consent on documents that didn't change.
 export const LEGAL_DOCUMENTS: Record<LegalDoc, LegalDocument> = {
   terms: {
     id: "terms",
     title: "Terms of Service",
-    version: VERSION,
-    effectiveDate: EFFECTIVE,
+    version: "2026-08-14",
+    effectiveDate: "August 14, 2026",
     intro: `These Terms of Service ("Terms") govern your access to and use of the ${COMPANY} mobile application and related services (the "Service"). By creating an account or using the Service, you agree to these Terms.`,
     sections: [
       {
@@ -95,8 +107,8 @@ export const LEGAL_DOCUMENTS: Record<LegalDoc, LegalDocument> = {
   privacy: {
     id: "privacy",
     title: "Privacy Policy",
-    version: VERSION,
-    effectiveDate: EFFECTIVE,
+    version: "2026-08-14",
+    effectiveDate: "August 14, 2026",
     intro: `This Privacy Policy explains what information ${COMPANY} collects, how we use it, and the choices you have. It applies to your use of the ${COMPANY} app and services.`,
     sections: [
       {
@@ -164,8 +176,8 @@ export const LEGAL_DOCUMENTS: Record<LegalDoc, LegalDocument> = {
   eula: {
     id: "eula",
     title: "End User License Agreement",
-    version: VERSION,
-    effectiveDate: EFFECTIVE,
+    version: "2026-08-14",
+    effectiveDate: "August 14, 2026",
     intro: `This End User License Agreement ("EULA") governs your use of the ${COMPANY} application and any content you access or create through it. By creating an account, you accept this EULA.`,
     sections: [
       {

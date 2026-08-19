@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import type { LegalDocument } from '../lib/legalContent';
-import { LEGAL_DOCUMENTS } from '../lib/legalContent';
+import { LEGAL_DOCUMENTS, sectionAnchor } from '../lib/legalContent';
 
 type LegalPageProps = { doc: LegalDocument };
 
@@ -60,12 +60,33 @@ export function LegalPage({ doc }: LegalPageProps) {
         <p className="mt-3 text-sm text-[#f8f2e9]/55">
           Version {doc.version} · Effective {doc.effectiveDate}
         </p>
+        {doc.changeNote && (
+          <p className="mt-1 text-sm italic text-[#f8f2e9]/55">
+            What changed: {doc.changeNote}
+          </p>
+        )}
 
         <p className="mt-8 text-base leading-7 text-[#f8f2e9]/85">{doc.intro}</p>
 
+        <nav aria-label="Table of contents" className="mt-8">
+          <p className="text-sm font-semibold text-[#f8f2e9]/55">Contents</p>
+          <ol className="mt-3 space-y-1.5">
+            {doc.sections.map((section) => (
+              <li key={section.heading}>
+                <a
+                  href={`#${sectionAnchor(section.heading)}`}
+                  className="rounded-sm text-sm text-[#f8f2e9]/80 underline decoration-[#f8f2e9]/30 underline-offset-2 transition-colors hover:text-[#ff735f] focus:outline-none focus:ring-2 focus:ring-[#ff735f]"
+                >
+                  {section.heading}
+                </a>
+              </li>
+            ))}
+          </ol>
+        </nav>
+
         <div className="mt-8 space-y-8">
           {doc.sections.map((section) => (
-            <section key={section.heading}>
+            <section key={section.heading} id={sectionAnchor(section.heading)}>
               <h2 className="font-display text-xl font-extrabold tracking-tight">
                 {section.heading}
               </h2>

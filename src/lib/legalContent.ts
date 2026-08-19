@@ -1,11 +1,8 @@
 // Legal document content for the published policy pages (LET-120/121).
 //
-// IMPORTANT: These are placeholder/boilerplate drafts to unblock the consent
-// plumbing and app-store submission. They are NOT lawyer-reviewed — every page
-// renders a visible "DRAFT — pending legal review" banner. Replace the wording
-// with counsel-approved text before public launch, and bump `version` (and the
-// matching value in the mobile app's `LEGAL_VERSIONS`) whenever the substance
-// changes so users are re-prompted for consent.
+// Bump a document's `version` (and the matching value in the mobile app's
+// `LEGAL_VERSIONS`) whenever its substance changes, so users are re-prompted
+// for consent.
 
 export type LegalDoc = "terms" | "privacy" | "eula";
 

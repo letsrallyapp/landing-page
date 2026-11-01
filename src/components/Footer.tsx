@@ -1,4 +1,5 @@
 import React from 'react';
+import { StoreButtons } from './StoreButtons';
 export function Footer() {
   return <footer className="bg-[#151515] pb-8 text-[#f8f2e9]">
       <div className="mx-auto max-w-7xl border-t border-white/15 px-5 pt-10 sm:px-8">
@@ -13,13 +14,11 @@ export function Footer() {
                 let’s rally
               </span>
             </a>
-            <a href="mailto:hello@letsrallyapp.com" className="mt-3 inline-block w-fit rounded-sm text-sm font-medium text-[#f8f2e9]/55 transition-colors hover:text-[#ff735f] focus:outline-none focus:ring-2 focus:ring-[#ff735f]">
+            <a href="mailto:hello@letsrallyapp.com" className="mt-3 block w-fit rounded-sm text-sm font-medium text-[#f8f2e9]/55 transition-colors hover:text-[#ff735f] focus:outline-none focus:ring-2 focus:ring-[#ff735f]">
               hello@letsrallyapp.com
             </a>
           </div>
-          <a href="#waitlist" className="w-fit rounded-sm bg-[#ff735f] px-5 py-3 text-sm font-extrabold text-[#151515] transition-colors hover:bg-[#ff927f] focus:outline-none focus:ring-2 focus:ring-[#ff735f] focus:ring-offset-2 focus:ring-offset-[#151515]">
-            Join the waitlist
-          </a>
+          <StoreButtons size="sm" />
         </div>
         <nav className="mt-8 flex flex-wrap gap-x-6 gap-y-2 text-sm font-medium text-[#f8f2e9]/55" aria-label="Legal">
           <a href="/terms" className="rounded-sm transition-colors hover:text-[#ff735f] focus:outline-none focus:ring-2 focus:ring-[#ff735f]">

@@ -1,7 +1,7 @@
 /// <reference types="vite/client" />
 
 interface ImportMetaEnv {
-  readonly VITE_LOOPS_FORM_ENDPOINT: string;
+  readonly VITE_IOS_APP_STORE_ID?: string;
 }
 interface ImportMeta {
   readonly env: ImportMetaEnv;

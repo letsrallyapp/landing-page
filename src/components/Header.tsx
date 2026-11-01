@@ -1,11 +1,19 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { ArrowUpRightIcon } from 'lucide-react';
-type HeaderProps = {
-  onWaitlistClick: () => void;
-};
-export function Header({
-  onWaitlistClick
-}: HeaderProps) {
+import { appStoreUrl, detectPlatform, playStoreUrl } from '../lib/invite';
+
+// On a phone, "Get the app" goes straight to that phone's store; everywhere
+// else it scrolls to the download section with both store buttons.
+function getAppHref(): string {
+  if (typeof navigator === 'undefined') return '#download';
+  const platform = detectPlatform(navigator.userAgent, navigator.maxTouchPoints);
+  if (platform === 'android') return playStoreUrl();
+  if (platform === 'ios') return appStoreUrl() ?? '#download';
+  return '#download';
+}
+
+export function Header() {
+  const getAppLink = useMemo(getAppHref, []);
   return <header className="border-b border-white/10 bg-[#151515] text-[#f8f2e9]">
       <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-5 sm:px-8">
         <a href="#top" className="group flex items-center gap-2.5 rounded-sm focus:outline-none focus:ring-2 focus:ring-[#ff735f] focus:ring-offset-4 focus:ring-offset-[#151515]" aria-label="Let's Rally home">
@@ -28,13 +36,16 @@ export function Header({
             
             How it works
           </a>
+          <a className="rounded-sm transition-colors hover:text-[#ff735f] focus:outline-none focus:ring-2 focus:ring-[#ff735f]" href="#download">
+            Download
+          </a>
         </nav>
 
-        <button type="button" onClick={onWaitlistClick} className="inline-flex items-center gap-1.5 rounded-sm bg-[#ff735f] px-4 py-2.5 text-sm font-extrabold text-[#151515] transition-colors hover:bg-[#ff927f] focus:outline-none focus:ring-2 focus:ring-[#ff735f] focus:ring-offset-2 focus:ring-offset-[#151515]">
+        <a href={getAppLink} className="inline-flex items-center gap-1.5 rounded-sm bg-[#ff735f] px-4 py-2.5 text-sm font-extrabold text-[#151515] transition-colors hover:bg-[#ff927f] focus:outline-none focus:ring-2 focus:ring-[#ff735f] focus:ring-offset-2 focus:ring-offset-[#151515]">
           
-          Join waitlist
+          Get the app
           <ArrowUpRightIcon className="h-4 w-4" aria-hidden="true" />
-        </button>
+        </a>
       </div>
     </header>;
 }

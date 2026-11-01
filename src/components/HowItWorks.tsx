@@ -1,5 +1,5 @@
 import React from 'react';
-import { CheckCircle2Icon } from 'lucide-react';
+import { ArrowDownIcon, CheckCircle2Icon } from 'lucide-react';
 const steps = [['Float the idea', 'Trivia tonight? A bike ride this weekend? Pick a plan while it is still fresh — no big production required.'], ['Find the right few', 'Let’s Rally can invite friends who are into that kind of hang, or you can choose exactly who gets the nudge.'], ['Make it easy', 'One temporary chat keeps the little details moving until everyone is together — then gets out of the way.']];
 export function HowItWorks() {
   return <section id="how-it-works" className="bg-[#ffdd57] py-20 text-[#151515] sm:py-28">
@@ -19,6 +19,10 @@ export function HowItWorks() {
             last-minute “come meet us” — the little plans that make a week
             better.
           </p>
+          <a href="#download" className="mt-8 inline-flex items-center gap-2 rounded-sm bg-[#151515] px-5 py-3.5 text-sm font-extrabold text-[#f8f2e9] transition-colors hover:bg-[#2a2a2a] focus:outline-none focus:ring-2 focus:ring-[#151515] focus:ring-offset-2 focus:ring-offset-[#ffdd57]">
+            Ready? Get the app
+            <ArrowDownIcon className="h-4 w-4" aria-hidden="true" />
+          </a>
         </div>
 
         <div className="border-t-2 border-[#151515]">

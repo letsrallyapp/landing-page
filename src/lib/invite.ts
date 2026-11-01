@@ -82,15 +82,14 @@ export function detectPlatform(userAgent: string, maxTouchPoints = 0): Platform 
 }
 
 /**
- * Play Store URL whose install referrer carries the code. The referrer value is
- * the url-encoded `rally_invite=<code>` — URLSearchParams encodes the `=` to
- * `%3D`, matching the format the app reads from the Android install referrer.
+ * Play Store URL. When a code is given, the install referrer carries it: the
+ * referrer value is the url-encoded `rally_invite=<code>` — URLSearchParams
+ * encodes the `=` to `%3D`, matching the format the app reads from the Android
+ * install referrer. Without a code it's the plain listing URL.
  */
-export function playStoreUrl(code: string): string {
-  const params = new URLSearchParams({
-    id: ANDROID_PACKAGE,
-    referrer: `rally_invite=${code}`,
-  });
+export function playStoreUrl(code?: string): string {
+  const params = new URLSearchParams({ id: ANDROID_PACKAGE });
+  if (code) params.set('referrer', `rally_invite=${code}`);
   return `https://play.google.com/store/apps/details?${params.toString()}`;
 }
 

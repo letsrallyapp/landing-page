@@ -1,11 +1,9 @@
 import React from 'react';
-import { ArrowDownIcon, SparklesIcon } from 'lucide-react';
+import { SparklesIcon } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { PhonePreview } from './PhonePreview';
-type HeroProps = {
-  onWaitlistClick: () => void;
-};
-export function Hero({ onWaitlistClick }: HeroProps) {
+import { StoreButtons } from './StoreButtons';
+export function Hero() {
   return (
     <main id="top">
       <section className="overflow-hidden bg-[#151515] pb-16 pt-12 text-[#f8f2e9] sm:pb-24 sm:pt-16">
@@ -41,18 +39,11 @@ export function Hero({ onWaitlistClick }: HeroProps) {
               one
               temporary chat to make it happen.
             </p>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <button
-                type="button"
-                onClick={onWaitlistClick}
-                className="inline-flex items-center gap-2 rounded-sm bg-[#ff735f] px-5 py-3.5 text-sm font-extrabold text-[#151515] transition-colors hover:bg-[#ff927f] focus:outline-none focus:ring-2 focus:ring-[#ff735f] focus:ring-offset-2 focus:ring-offset-[#151515]">
-                
-                Join the waitlist{' '}
-                <ArrowDownIcon className="h-4 w-4" aria-hidden="true" />
-              </button>
+            <StoreButtons className="mt-8" />
+            <div className="mt-5">
               <a
                 href="#why-rally"
-                className="rounded-sm border border-white/25 px-5 py-3.5 text-sm font-extrabold transition-colors hover:border-white/60 hover:bg-white/5 focus:outline-none focus:ring-2 focus:ring-[#ff735f]">
+                className="inline-block rounded-sm text-sm font-extrabold text-[#f8f2e9]/70 underline decoration-white/30 underline-offset-4 transition-colors hover:text-[#ff735f] focus:outline-none focus:ring-2 focus:ring-[#ff735f]">
                 
                 See Let’s Rally in action
               </a>

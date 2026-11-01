@@ -158,7 +158,7 @@ export function InvitePage() {
 // Store buttons for the no-/invalid-code case (no code to carry).
 function playStoreLinkOnly() {
   const ios = appStoreUrl();
-  const androidHref = `https://play.google.com/store/apps/details?id=com.letsrallyapp.mobile`;
+  const androidHref = playStoreUrl();
   const links: StoreLink[] = [
     { label: 'Get Rally on Android', href: androidHref },
   ];

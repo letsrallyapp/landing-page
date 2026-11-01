@@ -20,7 +20,6 @@ export function DownloadSection() {
           spontaneous, meaningful time with the friends you already miss.
         </p>
         <StoreButtons className="mt-9 justify-center" />
-        <p className="mt-4 text-xs text-[#f8f2e9]/45">Completely free.</p>
       </div>
     </section>);
 

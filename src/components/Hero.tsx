@@ -7,7 +7,7 @@ export function Hero() {
   return (
     <main id="top">
       <section className="overflow-hidden bg-[#151515] pb-16 pt-12 text-[#f8f2e9] sm:pb-24 sm:pt-16">
-        <div className="mx-auto grid max-w-7xl items-center gap-14 px-5 sm:px-8 lg:grid-cols-[1.05fr_0.95fr] lg:gap-20">
+        <div className="mx-auto grid max-w-7xl items-center gap-14 px-5 sm:px-8 lg:grid-cols-[1fr_auto] lg:gap-16 xl:gap-24">
           <motion.div
             initial={{
               opacity: 0,
@@ -26,7 +26,7 @@ export function Hero() {
               <SparklesIcon className="h-4 w-4" aria-hidden="true" /> For the
               friends you want to see more
             </p>
-            <h1 className="max-w-3xl font-display text-5xl font-black leading-[0.88] tracking-[-0.055em] sm:text-7xl lg:text-[5.6rem]">
+            <h1 className="max-w-3xl font-display text-5xl font-black leading-[0.88] tracking-[-0.055em] sm:text-7xl lg:text-[4.6rem] xl:text-[5.6rem]">
               More hangs.
               <br />
               Less <span className="text-[#ff735f]">back-and-</span>

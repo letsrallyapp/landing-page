@@ -36,6 +36,9 @@ export function Header() {
             
             How it works
           </a>
+          <a className="rounded-sm transition-colors hover:text-[#ff735f] focus:outline-none focus:ring-2 focus:ring-[#ff735f]" href="#download">
+            Download
+          </a>
         </nav>
 
         <a href={getAppLink} className="inline-flex items-center gap-1.5 rounded-sm bg-[#ff735f] px-4 py-2.5 text-sm font-extrabold text-[#151515] transition-colors hover:bg-[#ff927f] focus:outline-none focus:ring-2 focus:ring-[#ff735f] focus:ring-offset-2 focus:ring-offset-[#151515]">

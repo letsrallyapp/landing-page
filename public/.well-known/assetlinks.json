@@ -1,11 +1,17 @@
 [
   {
-    "relation": ["delegate_permission/common.handle_all_urls"],
+    "relation": [
+      "delegate_permission/common.handle_all_urls",
+      "delegate_permission/common.get_login_creds"
+    ],
     "target": {
       "namespace": "android_app",
       "package_name": "com.letsrallyapp.mobile",
       "sha256_cert_fingerprints": [
-        "B2:60:EB:40:5F:98:33:AB:91:9F:AB:C6:31:2D:60:5E:7F:85:F4:C2:27:A4:CA:D5:C9:98:51:1E:7E:33:1F:0E"
+        "B2:60:EB:40:5F:98:33:AB:91:9F:AB:C6:31:2D:60:5E:7F:85:F4:C2:27:A4:CA:D5:C9:98:51:1E:7E:33:1F:0E",
+        "43:91:E8:25:13:F1:B0:D3:D7:99:25:FB:FD:0F:B0:93:16:A4:CD:F5:13:59:D8:90:BA:35:1B:9B:B6:A5:61:92",
+        "D5:60:88:B4:F3:94:72:8E:4A:1A:CA:AA:EA:C8:6E:5F:B6:7E:34:7A:AF:33:B4:DD:87:DE:78:64:5D:1C:F7:F3",
+        "C7:3B:AD:50:4D:D2:22:4E:57:F7:36:B4:9E:A2:A2:82:48:66:E4:44:B1:17:EA:36:87:8B:9B:63:47:B3:31:55"
       ]
     }
   }
